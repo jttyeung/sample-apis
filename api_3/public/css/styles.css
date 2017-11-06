@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,700');
+
+body {
+  background-color: hsl(126, 25%, 43%);
+}
+
+h1 {
+  font-family: 'Roboto', 'Tahoma', sans-serif;
+  font-weight: 100;
+  color: #ffffff;
+  text-align: center;
+  margin: 80px 0px 40px 0px;
+}
+
+table {
+  color: #666666;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  margin-bottom: 100px !important;
+}
+
+.table-striped > tbody > tr:nth-child(odd) {
+  background-color: #fdfdfd;
+}
+
+thead {
+  font-weight: 700;
+}
+
+thead > tr > td {
+  border: none;
+}
+
+td {
+  text-align: center;
+  padding: 20px !important;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+}
+
+td:first-child {
+  border-left: 0px;
+}
+
+td:last-child {
+  border-right: 0px;
+}

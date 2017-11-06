@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <%- include('partials/head') %>
+  </head>
+
+  <body>
+  <!-- Product Ratings -->
+  <%
+    let products = {};
+
+    let likes = (productsLikes) => {
+      for(let i=0; i < productsLikes.length; i++) {
+        let productId = productsLikes[i].product_id;
+
+        if(products[productId]){
+          if(products[productId].likes){
+            products[productId].likes += 1;
+          } else {
+            products[productId].likes = 1;
+          }
+        } else {
+          products[productId] = {'likes': 1};
+        }
+      }
+    }
+    likes(productsLikes);
+
+    let ratings = (productsRatings) => {
+      for(let i=0; i < productsRatings.length; i++) {
+        let productId = productsRatings[i].product_id;
+        let productRating = productsRatings[i].rating_value;
+
+        if(products[productId]){
+          if(products[productId].rating_sum || products[productId].rating_count){
+            products[productId].rating_sum += productRating;
+            products[productId].rating_count += 1;
+          } else {
+            products[productId].rating_sum = productRating;
+            products[productId].rating_count = 1;
+          }
+        } else {
+          products[productId] = {'rating_sum': productRating, 'rating_count': 1};
+        }
+      }
+    }
+    ratings(productsRatings);
+
+    let averageRating = (rating_total, rating_count) => {
+      return ((Math.round(rating_total/rating_count * 100))/100).toFixed(2);
+    }
+  %>
+
+
+    <div class="container">
+      <h1>Noise Cancelling Headphone Ratings</h1>
+      <div class="table-responsive">
+        <table class="table table-responsive table-striped">
+          <thead>
+            <% productsTableHeader.forEach((columnHeader) => { %>
+              <td><%= columnHeader %></td>
+            <% }); %>
+          </thead>
+          <tbody id="productsPerformanceData">
+              <% productsNames.forEach((product) => {
+                  let productId = product.product_id
+                  let stringifyId = productId.toString(); %>
+              <tr>
+                <td><%= productId %></td>
+                <td><%= product.product_name %></td>
+                <% if(products[stringifyId]) {%><td><%= averageRating(products[stringifyId].rating_sum,products[stringifyId].rating_count) %></td><% } else { %><td>Not Rated</td><% } %>
+                <% if(products[stringifyId]) {%><td><%= products[stringifyId].rating_count %></td><% } else { %><td>0</td><% } %>
+                <% if(products[stringifyId]) {%><td><%= products[stringifyId].likes || 0 %></td><% } else { %><td>0</td><% } %>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </body>
+
+</html>
+
+
